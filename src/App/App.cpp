@@ -2,8 +2,8 @@
 
 App::App()
 {
-    scheduler = new Scheduler();
-    //TODO load data
+    scheduler = new Scheduler("../data/vans.csv",
+                              "../data/deliveries.csv");
 }
 
 void App::run()

@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "State.h"
+#include "ChooseSceneryState.h"
 
 class InitialState : public State {
    void step(App* app) override;

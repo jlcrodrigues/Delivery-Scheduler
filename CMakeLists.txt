@@ -12,6 +12,8 @@ set(SOURCE_FILES
         src/App/InitialState.h
         src/App/State.cpp
         src/App/State.h
+        src/App/ChooseSceneryState.cpp
+        src/App/ChooseSceneryState.h
 
         src/Scheduler/Courier.cpp
         src/Scheduler/Courier.h
@@ -23,7 +25,7 @@ set(SOURCE_FILES
 
 
 set(TEST_FILES
-        )
+        tests/Scenery1Test.cpp)
 
 include_directories(src)
 

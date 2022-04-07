@@ -32,3 +32,18 @@ int Courier::getVolume() const {
 int Courier::getWeight() const {
     return weight;
 }
+
+void Courier::setWeight(int w) {
+    weight = w;
+}
+
+void Courier::setVolume(int v) {
+    volume = v;
+}
+
+bool Courier::operator<(const Courier courier) const {
+    if (getWeight() == courier.getWeight()) {
+        return getVolume() < courier.getVolume();
+    }
+    return getWeight() < courier.getWeight();
+}

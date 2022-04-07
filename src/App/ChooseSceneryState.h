@@ -6,6 +6,7 @@
 class ChooseSceneryState : public State {
     void step(App* app) override;
 
+private:
 };
 
 

@@ -50,6 +50,20 @@ public:
     */
    int getWeight() const;
 
+   /**
+    * Set courier's new weight.
+    * @param w New weight
+    */
+   void setWeight(int w);
+
+   /**
+    * Set courier's new volume.
+    * @param v New volume.
+    */
+   void setVolume(int v);
+
+   bool operator < (const Courier courier) const;
+
 private:
    int cost;
    int volume;

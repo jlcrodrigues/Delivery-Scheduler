@@ -51,15 +51,18 @@ public:
     */
    int getVolume() const;
 
-   /**
+    /**
     * Get the package's weight.
     * @return Integer with the total weight of the package.
     */
    int getWeight() const;
+
+   bool operator < (const Delivery &delivery) const;
 private:
-   int compensation;
-   int duration;
-   int volume;
+    int compensation;
+    int duration;
+    int volume;
+
    int weight;
 
 };

@@ -15,6 +15,8 @@ void ChooseSceneryState::step(App *app) {
             case 3:
             case 2:
             case 1:
+
+                return;
             case 0:
                 app->setState(nullptr);
                 return;
@@ -23,3 +25,5 @@ void ChooseSceneryState::step(App *app) {
         }
     }
 }
+
+

@@ -41,3 +41,10 @@ int Delivery::getVolume() const {
 int Delivery::getWeight() const {
     return weight;
 }
+
+bool Delivery::operator<(const Delivery &delivery) const {
+    if (getWeight() == delivery.getWeight()) {
+        return getVolume() < delivery.getVolume();
+    }
+    return getWeight() < delivery.getWeight();
+}

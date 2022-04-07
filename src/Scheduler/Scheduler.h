@@ -39,6 +39,11 @@ public:
     */
    std::vector<Delivery> getDeliveries() const;
 
+//   int scenery1(App *app) const;
+//
+//   int firstFit(std::vector<Courier> couriers, std::vector<Delivery>  const deliveries) const;
+
+
 private:
 
    std::vector<Courier> couriers;

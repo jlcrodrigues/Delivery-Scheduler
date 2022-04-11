@@ -42,38 +42,47 @@ bool compareDeliveries(const Delivery& d1, const Delivery& d2) {
     return (d1.getCompensationRatio() < d2.getCompensationRatio());
 }
 
-std::vector<Courier> Scheduler::scenario2() {
+Allocation Scheduler::scenario2() {
+    int reward = 0, cost = 0;
+    int used_weight = 0, total_weight = 0;
+    int used_volume = 0, total_volume = 0;
     std::sort(couriers.begin(), couriers.end(), compareCouriers);
     std::sort(deliveries.begin(), deliveries.end(), compareDeliveries);
 
-    std::vector<std::pair<int, int> > usedCouriers;
-    int w = 0, w2 = 0, c = 0, c2 = 0;
+    std::vector<std::pair<int, int> > usedSizes; //volume, weight
+    std::vector<Courier> used_couriers;
+    std::vector<std::vector<Delivery> > allocated_deliveries;
 
     for (Delivery& delivery : deliveries) {
-        c += delivery.getCompensation();
-        w += delivery.getVolume();
+        reward += delivery.getCompensation();
+        used_weight += delivery.getWeight();
+        used_volume += delivery.getVolume();
         bool assigned = false;
-        for (int i = 0; i < usedCouriers.size(); i++) {
-            if (delivery.getVolume() < (couriers[i].getVolume() - usedCouriers[i].first) &&
-                    delivery.getWeight() < (couriers[i].getWeight() - usedCouriers[i].second)) {
-                usedCouriers[i].first += delivery.getVolume();
-                usedCouriers[i].second += delivery.getWeight();
+        for (int i = 0; i < used_couriers.size(); i++) {
+            if (delivery.getVolume() < (couriers[i].getVolume() - usedSizes[i].first) &&
+                    delivery.getWeight() < (couriers[i].getWeight() - usedSizes[i].second)) {
+                usedSizes[i].first += delivery.getVolume();
+                usedSizes[i].second += delivery.getWeight();
                 assigned = true;
+                allocated_deliveries[i].push_back(delivery);
                 break;
             }
         }
         if (!assigned) {
-            usedCouriers.emplace_back(delivery.getVolume(), delivery.getWeight());
-            w2 += couriers[usedCouriers.size() - 1].getVolume();
-            c2 += couriers[usedCouriers.size() - 1].getCost();
+            used_couriers.push_back(couriers[usedSizes.size() - 1]);
+            allocated_deliveries.push_back({delivery});
+            usedSizes.emplace_back(delivery.getVolume(), delivery.getWeight());
+            total_weight += couriers[usedSizes.size() - 1].getWeight();
+            total_volume += couriers[usedSizes.size() - 1].getVolume();
+            cost += used_couriers[used_couriers.size() - 1].getCost();
         }
     }
 
-    std::cout << deliveries.size() << std::endl;
-    std::cout << usedCouriers.size() << std::endl;
-    std::cout << "c " << c << std::endl;
-    std::cout << "c2 " << c2 << std::endl;
-    std::cout << "profit " << c - c2 << std::endl;
-    std::cout << w << std::endl;
-    std::cout << w2 << std::endl;
+    Allocation allocation;
+    allocation.setWeight(used_weight, total_weight);
+    allocation.setVolume(used_volume, total_volume);
+    allocation.setProfit(reward, cost);
+    allocation.setCouriers(couriers);
+    allocation.setDeliveries(allocated_deliveries);
+    return allocation;
 }

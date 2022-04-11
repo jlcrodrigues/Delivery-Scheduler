@@ -8,6 +8,7 @@
 
 #include "Courier.h"
 #include "Delivery.h"
+#include "Allocation.h"
 
 class Scheduler {
 
@@ -40,7 +41,7 @@ public:
     */
    std::vector<Delivery> getDeliveries() const;
 
-   std::vector<Courier> scenario2();
+   Allocation scenario2();
 
 private:
 

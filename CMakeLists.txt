@@ -8,13 +8,17 @@ set(CREATE_EXE TRUE)
 set(SOURCE_FILES
         src/App/App.cpp
         src/App/App.h
-        src/App/InitialState.cpp
-        src/App/InitialState.h
-        src/App/State.cpp
-        src/App/State.h
         src/App/ChooseSceneryState.cpp
         src/App/ChooseSceneryState.h
+        src/App/InitialState.cpp
+        src/App/InitialState.h
+        src/App/Scenery2State.cpp
+        src/App/Scenery2State.h
+        src/App/State.cpp
+        src/App/State.h
 
+        src/Scheduler/Allocation.cpp
+        src/Scheduler/Allocation.h
         src/Scheduler/Courier.cpp
         src/Scheduler/Courier.h
         src/Scheduler/Delivery.cpp

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <algorithm>
 
 #include "Courier.h"
 #include "Delivery.h"
@@ -38,6 +39,8 @@ public:
     * @return A Vector of deliveries objects.
     */
    std::vector<Delivery> getDeliveries() const;
+
+   std::vector<Courier> scenario2();
 
 private:
 

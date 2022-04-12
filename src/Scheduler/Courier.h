@@ -50,6 +50,12 @@ public:
     */
    int getWeight() const;
 
+   /**
+    * Get the price per capacity of the van.
+    * @return Double with the amount of space per cost unit.
+    */
+   double getCostRatio() const;
+
 private:
    int cost;
    int volume;

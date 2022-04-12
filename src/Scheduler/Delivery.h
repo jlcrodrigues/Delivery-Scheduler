@@ -56,6 +56,12 @@ public:
     * @return Integer with the total weight of the package.
     */
    int getWeight() const;
+
+   /**
+    * Get the compensation per size ratio.
+    * @return Double with the cost per spacing.
+    */
+   double getCompensationRatio() const;
 private:
    int compensation;
    int duration;

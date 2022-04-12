@@ -41,3 +41,7 @@ int Delivery::getVolume() const {
 int Delivery::getWeight() const {
     return weight;
 }
+
+double Delivery::getCompensationRatio() const {
+    return compensation / (weight + volume);
+}

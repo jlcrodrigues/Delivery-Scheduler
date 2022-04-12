@@ -5,6 +5,7 @@
 #include <vector>
 #include <fstream>
 #include <algorithm>
+#include <list>
 
 #include "Courier.h"
 #include "Delivery.h"
@@ -44,9 +45,17 @@ public:
    Allocation scenario2();
 
 private:
+   void initValues();
+   bool getFirstFitUsed(const Delivery& delivery);
+   bool getFirstFitNew(std::list<Courier>& available_couriers, Delivery& delivery);
 
+   Allocation allocation;
    std::vector<Courier> couriers;
    std::vector<Delivery> deliveries;
+
+   std::vector<Courier> used_couriers;
+   std::vector<std::pair<int, int> > used_sizes; //volume, weight
+   std::vector<std::vector<Delivery> > allocated_deliveries;
 
 };
 

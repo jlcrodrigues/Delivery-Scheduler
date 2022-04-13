@@ -3,6 +3,7 @@
 Scheduler::Scheduler(const std::string &couriers_file, const std::string &deliveries_file) {
     loadCouriers(couriers_file);
     loadDeliveries(deliveries_file);
+    time_available = 28800;
 }
 
 void Scheduler::loadCouriers(const std::string &file_path) {
@@ -41,6 +42,9 @@ bool compareCouriers(const Courier& c1, const Courier& c2) {
 bool compareDeliveries(const Delivery& d1, const Delivery& d2) {
     return (d1.getCompensationRatio() < d2.getCompensationRatio());
 }
+bool compareDuration(const Delivery& d1, const Delivery& d2){
+    return (d1.getDuration() < d2.getDuration());
+}
 
 Allocation Scheduler::scenario2() {
     std::sort(couriers.begin(), couriers.end(), compareCouriers);
@@ -58,6 +62,23 @@ Allocation Scheduler::scenario2() {
 
     allocation.setCouriers(couriers);
     allocation.setDeliveries(allocated_deliveries);
+    return allocation;
+}
+
+Allocation Scheduler::scenario3() {
+    std::sort(deliveries.begin(),deliveries.end(), compareDuration);
+    couriers.clear();
+    couriers.push_back({0,0,0});
+
+    initValues();
+
+    for (Delivery& delivery : deliveries) {
+        if(!(insertExpressDelivery(delivery))){
+            break;
+        }
+    }
+    allocation.setDeliveries(allocated_deliveries);
+    allocation.setCouriers(couriers);
     return allocation;
 }
 
@@ -102,6 +123,18 @@ bool Scheduler::getFirstFitNew(std::list<Courier> &available_couriers, Delivery&
             available_couriers.erase(it);
             return true;
         }
+    }
+    return false;
+}
+
+bool Scheduler::insertExpressDelivery(Delivery& delivery){
+    if (delivery.getDuration()<=time_available){
+        allocated_deliveries.push_back({delivery});
+        allocation.addWeight(delivery.getWeight(), 0);
+        allocation.addVolume(delivery.getVolume(), 0);
+        allocation.addProfit(delivery.getCompensation(), 0);
+        time_available -= delivery.getDuration();
+        return true;
     }
     return false;
 }

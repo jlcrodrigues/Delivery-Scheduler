@@ -51,6 +51,7 @@ public:
    int getWeight() const;
 
    /**
+<<<<<<< HEAD
     * Get the price per capacity of the van.
     * @return Double with the amount of space per cost unit.
     */

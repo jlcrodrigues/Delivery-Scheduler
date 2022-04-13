@@ -51,7 +51,7 @@ public:
     */
    int getVolume() const;
 
-   /**
+    /**
     * Get the package's weight.
     * @return Integer with the total weight of the package.
     */
@@ -69,9 +69,10 @@ public:
     */
     int getCapacity() const;
 private:
-   int compensation;
-   int duration;
-   int volume;
+    int compensation;
+    int duration;
+    int volume;
+
    int weight;
 
 };

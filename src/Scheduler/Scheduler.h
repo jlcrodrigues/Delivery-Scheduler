@@ -60,6 +60,12 @@ public:
     */
    Allocation scenario2();
 
+   /**
+    * Get an allocation for the scenario 3. Allocates the deliveries to minimize the average time for each delivery.
+    * @return An allocation object with the results of the algorithm.
+    */
+   Allocation scenario3();
+
 private:
    /** Resets all the values needed for the scenario's algorithms.**/
    void initValues();
@@ -79,9 +85,17 @@ private:
     */
    bool getFirstFitNew(std::list<Courier>& available_couriers, Delivery& delivery);
 
+   /**
+    * Try to allocate an express delivery on the company's courier.
+    * @param delivery A Delivery object to be allocated.
+    * @return Returns true if the express delivery was successful allocated in the company's courier.
+    */
+   bool insertExpressDelivery(Delivery& delivery);
+
    Allocation allocation;
    std::vector<Courier> couriers;
    std::vector<Delivery> deliveries;
+   int time_available;
 
    std::vector<Courier> used_couriers;
    std::vector<std::pair<int, int> > used_sizes; //volume, weight

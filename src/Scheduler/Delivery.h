@@ -62,6 +62,12 @@ public:
     * @return Double with the cost per spacing.
     */
    double getCompensationRatio() const;
+
+   /**
+    * Get capacity of delivery considering volume and weight.
+    * @return Sum of volume and weight.
+    */
+    int getCapacity() const;
 private:
    int compensation;
    int duration;

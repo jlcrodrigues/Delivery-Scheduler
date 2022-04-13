@@ -56,10 +56,16 @@ public:
     */
    double getCostRatio() const;
 
+   /**
+    * Get the capacity of a van considering volume and weight.
+    * @return Sum of with and volume.
+    */
+    int getCapacity() const;
 private:
    int cost;
    int volume;
    int weight;
+
 };
 
 #endif

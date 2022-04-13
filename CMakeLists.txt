@@ -29,7 +29,7 @@ set(SOURCE_FILES
 
 
 set(TEST_FILES
-        tests/Scenery1Test.cpp)
+        tests/Scenery1Test.cpp src/App/Scenery1State.cpp src/App/Scenery1State.h)
 
 include_directories(src)
 

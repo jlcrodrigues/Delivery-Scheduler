@@ -35,12 +35,43 @@ std::vector<Delivery> Scheduler::getDeliveries() const {
     return deliveries;
 }
 
+/*
+bool compareCouriers1(const Courier& c1, const Courier& c2) {
+    return (c1.getCapacity() > c2.getCapacity());
+}
+
+bool compareDeliveries1(const Delivery& d1, Delivery& d2) {
+    return (d1.getCapacity() > d2.getCapacity());
+}
+*/
+
 bool compareCouriers(const Courier& c1, const Courier& c2) {
     return (c1.getCostRatio() < c2.getCostRatio());
 }
 bool compareDeliveries(const Delivery& d1, const Delivery& d2) {
     return (d1.getCompensationRatio() < d2.getCompensationRatio());
 }
+
+/*
+Allocation Scheduler::scenario1() {
+    std::sort(couriers.begin(), couriers.end(), compareCouriers1);
+    std::sort(deliveries.begin(), deliveries.end(), compareDeliveries1);
+
+    std::list<Courier> available_couriers(couriers.begin(), couriers.end());
+
+    initValues();
+
+    for (Delivery& delivery : deliveries) {
+        if (!getFirstFitUsed(delivery)) {
+            getFirstFitNew(available_couriers, delivery);
+        }
+    }
+
+    allocation.setCouriers(couriers);
+    allocation.setDeliveries(allocated_deliveries);
+    return allocation;
+}
+*/
 
 Allocation Scheduler::scenario2() {
     std::sort(couriers.begin(), couriers.end(), compareCouriers);
@@ -56,7 +87,7 @@ Allocation Scheduler::scenario2() {
         }
     }
 
-    allocation.setCouriers(couriers);
+    allocation.setCouriers(used_couriers);
     allocation.setDeliveries(allocated_deliveries);
     return allocation;
 }

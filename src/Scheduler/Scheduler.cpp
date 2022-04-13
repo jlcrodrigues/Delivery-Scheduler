@@ -71,7 +71,7 @@ Allocation Scheduler::scenario1() {
         }
     }
 
-    allocation.setCouriers(couriers);
+    allocation.setCouriers(used_couriers);
     allocation.setDeliveries(allocated_deliveries);
     return allocation;
 }

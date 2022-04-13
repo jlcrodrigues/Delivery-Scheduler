@@ -68,7 +68,7 @@ Allocation Scheduler::scenario2() {
 Allocation Scheduler::scenario3() {
     std::sort(deliveries.begin(),deliveries.end(), compareDuration);
     couriers.clear();
-    couriers.push_back({0,0,0});
+    couriers.push_back({INT_MAX,INT_MAX,0});
 
     initValues();
 
@@ -130,8 +130,8 @@ bool Scheduler::getFirstFitNew(std::list<Courier> &available_couriers, Delivery&
 bool Scheduler::insertExpressDelivery(Delivery& delivery){
     if (delivery.getDuration()<=time_available){
         allocated_deliveries.push_back({delivery});
-        allocation.addWeight(delivery.getWeight(), 0);
-        allocation.addVolume(delivery.getVolume(), 0);
+        allocation.addWeight(delivery.getWeight(), delivery.getWeight());
+        allocation.addVolume(delivery.getVolume(), delivery.getVolume());
         allocation.addProfit(delivery.getCompensation(), 0);
         time_available -= delivery.getDuration();
         return true;

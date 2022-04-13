@@ -67,10 +67,10 @@ Allocation Scheduler::scenario2() {
 
 Allocation Scheduler::scenario3() {
     std::sort(deliveries.begin(),deliveries.end(), compareDuration);
-    couriers.clear();
-    couriers.push_back({INT_MAX,INT_MAX,0});
 
     initValues();
+
+    used_couriers.push_back({INT_MAX,INT_MAX,0});
 
     for (Delivery& delivery : deliveries) {
         if(!(insertExpressDelivery(delivery))){
@@ -78,7 +78,7 @@ Allocation Scheduler::scenario3() {
         }
     }
     allocation.setDeliveries(allocated_deliveries);
-    allocation.setCouriers(couriers);
+    allocation.setCouriers(used_couriers);
     return allocation;
 }
 
@@ -87,6 +87,7 @@ void Scheduler::initValues() {
     used_sizes.clear();
     allocated_deliveries.clear();
     allocation.clear();
+    time_available = 28800;
 }
 
 bool Scheduler::getFirstFitUsed(const Delivery &delivery) {

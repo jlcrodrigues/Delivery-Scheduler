@@ -35,27 +35,27 @@ std::vector<Delivery> Scheduler::getDeliveries() const {
     return deliveries;
 }
 
-/*
-bool compareCouriers1(const Courier& c1, const Courier& c2) {
+
+bool compareCouriersSize(const Courier& c1, const Courier& c2) {
     return (c1.getCapacity() > c2.getCapacity());
 }
 
-bool compareDeliveries1(const Delivery& d1, Delivery& d2) {
+bool compareDeliveriesSize(const Delivery& d1, Delivery& d2) {
     return (d1.getCapacity() > d2.getCapacity());
 }
-*/
 
-bool compareCouriers(const Courier& c1, const Courier& c2) {
+
+bool compareCouriersCost(const Courier& c1, const Courier& c2) {
     return (c1.getCostRatio() < c2.getCostRatio());
 }
-bool compareDeliveries(const Delivery& d1, const Delivery& d2) {
+bool compareDeliveriesCost(const Delivery& d1, const Delivery& d2) {
     return (d1.getCompensationRatio() < d2.getCompensationRatio());
 }
 
-/*
+
 Allocation Scheduler::scenario1() {
-    std::sort(couriers.begin(), couriers.end(), compareCouriers1);
-    std::sort(deliveries.begin(), deliveries.end(), compareDeliveries1);
+    std::sort(couriers.begin(), couriers.end(), compareCouriersSize);
+    std::sort(deliveries.begin(), deliveries.end(), compareDeliveriesSize);
 
     std::list<Courier> available_couriers(couriers.begin(), couriers.end());
 
@@ -71,11 +71,11 @@ Allocation Scheduler::scenario1() {
     allocation.setDeliveries(allocated_deliveries);
     return allocation;
 }
-*/
+
 
 Allocation Scheduler::scenario2() {
-    std::sort(couriers.begin(), couriers.end(), compareCouriers);
-    std::sort(deliveries.begin(), deliveries.end(), compareDeliveries);
+    std::sort(couriers.begin(), couriers.end(), compareCouriersCost);
+    std::sort(deliveries.begin(), deliveries.end(), compareDeliveriesCost);
 
     std::list<Courier> available_couriers(couriers.begin(), couriers.end());
 

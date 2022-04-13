@@ -5,9 +5,9 @@ void Scenery2State::step(App* app) {
 
     Allocation allocation = app->getScheduler()->scenario2();
 
-    std::cout << allocation;
+    std::cout << "Scenario 2: Optimize company profit\n\n";
+    std::cout << allocation << std::endl;
 
-    std::cout << std::endl;
     std::cout << "2) See list of couriers.\n\n";
     std::cout << "1) Go back.\n";
     std::cout << "0) Exit.\n";

@@ -74,13 +74,13 @@ public:
     * Set the used courier's vector.
     * @param couriers Vector containing all used couriers.
     */
-   void setCouriers(const std::vector<Courier> couriers);
+   void setCouriers(const std::vector<Courier>& couriers);
 
    /**
     * Set the deliveries vector.
     * @param deliveries 2D vector with a vector of deliveries per courier.
     */
-   void setDeliveries(const std::vector<std::vector<Delivery> > deliveries);
+   void setDeliveries(const std::vector<std::vector<Delivery> >& deliveries);
 
    /**
     * Clear the allocation's value to default.

@@ -52,11 +52,11 @@ void Allocation::setProfit(const int &reward, const int &cost) {
     this->cost = cost;
 }
 
-void Allocation::setCouriers(const std::vector<Courier> couriers) {
+void Allocation::setCouriers(const std::vector<Courier>& couriers) {
     this->couriers = couriers;
 }
 
-void Allocation::setDeliveries(const std::vector<std::vector<Delivery>> deliveries) {
+void Allocation::setDeliveries(const std::vector<std::vector<Delivery> >& deliveries) {
     this->deliveries = deliveries;
 }
 

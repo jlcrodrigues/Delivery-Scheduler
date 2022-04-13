@@ -36,3 +36,7 @@ int Courier::getWeight() const {
 double Courier::getCostRatio() const {
     return cost / (weight + volume);
 }
+
+int Courier::getCapacity() const {
+    return weight + volume;
+}

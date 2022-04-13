@@ -51,7 +51,7 @@ public:
     */
    int getVolume() const;
 
-   /**
+    /**
     * Get the package's weight.
     * @return Integer with the total weight of the package.
     */
@@ -62,10 +62,17 @@ public:
     * @return Double with the cost per spacing.
     */
    double getCompensationRatio() const;
+
+   /**
+    * Get capacity of delivery considering volume and weight.
+    * @return Sum of volume and weight.
+    */
+    int getCapacity() const;
 private:
-   int compensation;
-   int duration;
-   int volume;
+    int compensation;
+    int duration;
+    int volume;
+
    int weight;
 
 };

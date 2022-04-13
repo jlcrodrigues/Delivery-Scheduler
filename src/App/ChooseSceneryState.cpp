@@ -19,6 +19,7 @@ void ChooseSceneryState::step(App *app) {
                 app->setState(new Scenery2State());
                 return;
             case 1:
+                app->setState(new Scenery1State());
                 return;
             case 0:
                 app->setState(nullptr);
@@ -28,3 +29,5 @@ void ChooseSceneryState::step(App *app) {
         }
     }
 }
+
+

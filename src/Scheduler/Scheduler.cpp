@@ -36,19 +36,30 @@ std::vector<Delivery> Scheduler::getDeliveries() const {
     return deliveries;
 }
 
-bool compareCouriers(const Courier& c1, const Courier& c2) {
+
+bool compareCouriersSize(const Courier& c1, const Courier& c2) {
+    return (c1.getCapacity() > c2.getCapacity());
+}
+
+bool compareDeliveriesSize(const Delivery& d1, Delivery& d2) {
+    return (d1.getCapacity() > d2.getCapacity());
+}
+
+
+bool compareCouriersCost(const Courier& c1, const Courier& c2) {
     return (c1.getCostRatio() < c2.getCostRatio());
 }
-bool compareDeliveries(const Delivery& d1, const Delivery& d2) {
+bool compareDeliveriesCost(const Delivery& d1, const Delivery& d2) {
     return (d1.getCompensationRatio() < d2.getCompensationRatio());
 }
 bool compareDuration(const Delivery& d1, const Delivery& d2){
     return (d1.getDuration() < d2.getDuration());
 }
 
-Allocation Scheduler::scenario2() {
-    std::sort(couriers.begin(), couriers.end(), compareCouriers);
-    std::sort(deliveries.begin(), deliveries.end(), compareDeliveries);
+
+Allocation Scheduler::scenario1() {
+    std::sort(couriers.begin(), couriers.end(), compareCouriersSize);
+    std::sort(deliveries.begin(), deliveries.end(), compareDeliveriesSize);
 
     std::list<Courier> available_couriers(couriers.begin(), couriers.end());
 
@@ -60,7 +71,26 @@ Allocation Scheduler::scenario2() {
         }
     }
 
-    allocation.setCouriers(couriers);
+    allocation.setCouriers(used_couriers);
+    allocation.setDeliveries(allocated_deliveries);
+    return allocation;
+}
+
+Allocation Scheduler::scenario2() {
+    std::sort(couriers.begin(), couriers.end(), compareCouriersCost);
+    std::sort(deliveries.begin(), deliveries.end(), compareDeliveriesCost);
+
+    std::list<Courier> available_couriers(couriers.begin(), couriers.end());
+
+    initValues();
+
+    for (Delivery &delivery: deliveries) {
+        if (!getFirstFitUsed(delivery)) {
+            getFirstFitNew(available_couriers, delivery);
+        }
+    }
+
+    allocation.setCouriers(used_couriers);
     allocation.setDeliveries(allocated_deliveries);
     return allocation;
 }

@@ -49,6 +49,12 @@ public:
    std::vector<Delivery> getDeliveries() const;
 
    /**
+    * Get allocation for the scenario 1. Allocates the deliveries to optimize number of couriers.
+    * @return An allocation object with the results of the algorithm.
+    */
+   Allocation scenario1();
+
+   /**
     * Get an allocation for the scenario 2. Allocates the deliveries to maximize profit.
     * @return An allocation object with the results of the algorithm.
     */

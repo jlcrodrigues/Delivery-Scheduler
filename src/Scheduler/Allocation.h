@@ -50,6 +50,12 @@ public:
    void addProfit(const int& reward, const int& cost);
 
    /**
+    * Add a delivery to the allocation values.
+    * @param delivery Delivery object.
+    */
+   void addDelivery(const Delivery& delivery);
+
+   /**
     * Set the Allocation's weight values.
     * @param used_weight The total weight used.
     * @param total_weight The total weight from all the used vans.

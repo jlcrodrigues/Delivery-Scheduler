@@ -37,6 +37,12 @@ void Allocation::addProfit(const int &reward, const int &cost) {
     this->cost += cost;
 }
 
+void Allocation::addDelivery(const Delivery &delivery) {
+    this->used_weight += delivery.getWeight();
+    this->used_volume += delivery.getVolume();
+    this->reward += delivery.getCompensation();
+}
+
 void Allocation::setWeight(const int& used_weight, const int& total_weight) {
     this->used_weight = used_weight;
     this->total_weight = total_weight;

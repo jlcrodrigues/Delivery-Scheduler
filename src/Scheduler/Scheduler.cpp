@@ -128,9 +128,7 @@ bool Scheduler::getFirstFitUsed(const Delivery &delivery) {
             used_sizes[i].second += delivery.getWeight();
             allocated_deliveries[i].push_back(delivery);
 
-            allocation.addWeight(delivery.getWeight(), 0);
-            allocation.addVolume(delivery.getVolume(), 0);
-            allocation.addProfit(delivery.getCompensation(), 0);
+            allocation.addDelivery(delivery);
 
             return true;
         }

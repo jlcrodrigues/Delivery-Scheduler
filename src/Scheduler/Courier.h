@@ -3,6 +3,7 @@
 
 #include <string>
 #include <sstream>
+#include <vector>
 
 /**
  * Each courier has a van with specific attributes. Vans are stored in vans.csv.
@@ -51,7 +52,6 @@ public:
    int getWeight() const;
 
    /**
-<<<<<<< HEAD
     * Get the price per capacity of the van.
     * @return Double with the amount of space per cost unit.
     */

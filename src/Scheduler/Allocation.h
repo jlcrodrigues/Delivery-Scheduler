@@ -86,6 +86,18 @@ public:
     * Clear the allocation's value to default.
     */
    void clear();
+
+   /**
+    * Get the couriers used for the allocation.
+    * @return Vector of Courier objects.
+    */
+   std::vector<Courier> getUsedCouriers() const;
+
+   /**
+    * Get the deliveries allocated per courier.
+    * @return Vector of Courier objects.
+    */
+   std::vector<std::vector<Delivery> > getDeliveries() const;
 private:
    /**
     * Count the total number of deliveries.

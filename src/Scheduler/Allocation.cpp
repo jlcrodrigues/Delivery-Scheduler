@@ -71,6 +71,14 @@ void Allocation::clear() {
     deliveries.clear();
 }
 
+std::vector<Courier> Allocation::getUsedCouriers() const {
+    return couriers;
+}
+
+std::vector<std::vector<Delivery> > Allocation::getDeliveries() const {
+    return deliveries;
+}
+
 int Allocation::getDeliveriesCount() const {
     int count = 0;
     for (auto & v : deliveries)

@@ -17,6 +17,7 @@ void Scenery1State::step(App *app) {
 
         switch (option) {
             case 2:
+                displayCouriers(app, allocation);
                 return;
             case 1:
                 app->setState(new ChooseSceneryState());

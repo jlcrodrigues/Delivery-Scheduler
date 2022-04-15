@@ -40,7 +40,6 @@ std::vector<Delivery> Scheduler::getDeliveries() const {
 bool compareCouriersSize(const Courier& c1, const Courier& c2) {
     return (c1.getCapacity() > c2.getCapacity());
 }
-
 bool compareDeliveriesSize(const Delivery& d1, Delivery& d2) {
     return (d1.getCapacity() > d2.getCapacity());
 }
@@ -52,12 +51,19 @@ bool compareCouriersCost(const Courier& c1, const Courier& c2) {
 bool compareDeliveriesCost(const Delivery& d1, const Delivery& d2) {
     return (d1.getCompensationRatio() < d2.getCompensationRatio());
 }
+
+
 bool compareDuration(const Delivery& d1, const Delivery& d2){
     return (d1.getDuration() < d2.getDuration());
 }
 
 
-Allocation Scheduler::scenario1() {
+bool compareCouriersFreeSpace(const Courier& c1, const Courier& c2) {
+    return (c1.getFreeCapacity() < c2.getFreeCapacity());
+}
+
+
+Allocation Scheduler::scenery1() {
     std::sort(couriers.begin(), couriers.end(), compareCouriersSize);
     std::sort(deliveries.begin(), deliveries.end(), compareDeliveriesSize);
 
@@ -76,7 +82,7 @@ Allocation Scheduler::scenario1() {
     return allocation;
 }
 
-Allocation Scheduler::scenario2() {
+Allocation Scheduler::scenery2() {
     std::sort(couriers.begin(), couriers.end(), compareCouriersCost);
     std::sort(deliveries.begin(), deliveries.end(), compareDeliveriesCost);
 
@@ -95,7 +101,7 @@ Allocation Scheduler::scenario2() {
     return allocation;
 }
 
-Allocation Scheduler::scenario3() {
+Allocation Scheduler::scenery3() {
     std::sort(deliveries.begin(),deliveries.end(), compareDuration);
 
     initValues();
@@ -121,19 +127,6 @@ void Scheduler::initValues() {
 
 bool Scheduler::getFirstFitUsed(const Delivery &delivery) {
     for (int i = 0; i < used_couriers.size(); i++) {
-/*
-        if (delivery.getVolume() <= (couriers[i].getVolume() - used_sizes[i].first) &&
-            delivery.getWeight() <= (couriers[i].getWeight() - used_sizes[i].second)) {
-            used_sizes[i].first += delivery.getVolume();
-            used_sizes[i].second += delivery.getWeight();
-            allocated_deliveries[i].push_back(delivery);
-
-            allocation.addDelivery(delivery);
-
-            return true;
-        }
-*/
-
         if (delivery.getVolume() <= used_couriers[i].getFreeVolume() &&
             delivery.getWeight() <= used_couriers[i].getFreeWeight())
         {
@@ -177,5 +170,51 @@ bool Scheduler::insertExpressDelivery(Delivery& delivery){
         time_available -= delivery.getDuration();
         return true;
     }
+    return false;
+}
+
+bool Scheduler::getBestFitUsed(const Delivery &delivery) {
+    std::sort(used_couriers.begin(), used_couriers.end(), compareCouriersFreeSpace);
+
+    auto it = used_couriers.begin();
+
+    while (it != used_couriers.end()) {
+        if (delivery.getVolume() <= it->getFreeVolume() &&
+            delivery.getWeight() <= it->getFreeWeight())
+        {
+            it->updateFreeVolume(delivery.getVolume());
+            it->updateFreeWeight(delivery.getWeight());
+            allocated_deliveries.push_back({delivery});
+
+            allocation.addDelivery(delivery);
+            return true;
+        }
+        it++;
+    }
+
+    return false;
+}
+
+bool Scheduler::getBestFitNew(std::list<Courier> &available_couriers, Delivery& delivery) {
+    available_couriers.sort(compareCouriersFreeSpace);
+
+    auto it = available_couriers.begin();
+    while (it != available_couriers.end()) {
+        if (delivery.getVolume() <= it->getVolume() &&
+            delivery.getWeight() <= it->getWeight())
+        {
+            used_couriers.push_back(*it);
+            allocated_deliveries.push_back({delivery});
+
+            allocation.addWeight(delivery.getWeight(), it->getWeight());
+            allocation.addVolume(delivery.getVolume(), it->getVolume());
+            allocation.addProfit(delivery.getCompensation(), it->getCost());
+
+            available_couriers.erase(it);
+            return true;
+        }
+        it++;
+    }
+
     return false;
 }

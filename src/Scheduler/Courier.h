@@ -82,10 +82,16 @@ public:
    double getCostRatio() const;
 
    /**
-    * Get the capacity of a van considering volume and weight.
-    * @return Sum of with and volume.
+    * Get van's capacity considering volume and weight.
+    * @return Average of volume and weight.
     */
     float getCapacity() const;
+
+    /**
+     * Get van's free space/capacity considering volume and weight
+     * @return Average of free volume and free weight.
+     */
+    float getFreeCapacity() const;
 private:
    int cost;
    int volume;

@@ -64,8 +64,8 @@ public:
    double getCompensationRatio() const;
 
    /**
-    * Get capacity of delivery considering volume and weight.
-    * @return Sum of volume and weight.
+    * Get van's capacity considering volume and weight.
+    * @return Average of volume and weight.
     */
     float getCapacity() const;
 private:

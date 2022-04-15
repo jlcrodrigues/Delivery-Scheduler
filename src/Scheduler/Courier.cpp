@@ -60,3 +60,7 @@ double Courier::getCostRatio() const {
 float Courier::getCapacity() const {
     return (weight + volume) / 2;
 }
+
+float Courier::getFreeCapacity() const {
+    return (free_weight + free_volume) / 2;
+}

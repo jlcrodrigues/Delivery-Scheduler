@@ -3,7 +3,7 @@
 void Scenery3State::step(App* app) {
     printBreak();
 
-    Allocation allocation = app->getScheduler()->scenario3();
+    Allocation allocation = app->getScheduler()->scenery3();
 
     std::cout << "Scenario 3: Optimize express deliveries\n\n";
     std::cout << allocation << std::endl;

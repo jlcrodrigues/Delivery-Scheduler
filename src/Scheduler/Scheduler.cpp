@@ -58,14 +58,16 @@ bool compareDuration(const Delivery& d1, const Delivery& d2){
 
 
 Allocation Scheduler::scenario1() {
-    std::sort(couriers.begin(), couriers.end(), compareCouriersSize);
-    std::sort(deliveries.begin(), deliveries.end(), compareDeliveriesSize);
+    std::vector<Courier> couriers_copy(couriers.begin(), couriers.end());
+    std::sort(couriers_copy.begin(), couriers_copy.end(), compareCouriersSize);
+    std::vector<Delivery> deliveries_copy(deliveries.begin(), deliveries.end());
+    std::sort(deliveries_copy.begin(), deliveries_copy.end(), compareDeliveriesCost);
 
-    std::list<Courier> available_couriers(couriers.begin(), couriers.end());
+    std::list<Courier> available_couriers(couriers_copy.begin(), couriers_copy.end());
 
     initValues();
 
-    for (Delivery& delivery : deliveries) {
+    for (Delivery& delivery : deliveries_copy) {
         if (!getFirstFitUsed(delivery)) {
             getFirstFitNew(available_couriers, delivery);
         }
@@ -77,14 +79,16 @@ Allocation Scheduler::scenario1() {
 }
 
 Allocation Scheduler::scenario2() {
-    std::sort(couriers.begin(), couriers.end(), compareCouriersCost);
-    std::sort(deliveries.begin(), deliveries.end(), compareDeliveriesCost);
+    std::vector<Courier> couriers_copy(couriers.begin(), couriers.end());
+    std::sort(couriers_copy.begin(), couriers_copy.end(), compareCouriersCost);
+    std::vector<Delivery> deliveries_copy(deliveries.begin(), deliveries.end());
+    std::sort(deliveries_copy.begin(), deliveries_copy.end(), compareDeliveriesCost);
 
-    std::list<Courier> available_couriers(couriers.begin(), couriers.end());
+    std::list<Courier> available_couriers(couriers_copy.begin(), couriers_copy.end());
 
     initValues();
 
-    for (Delivery &delivery: deliveries) {
+    for (Delivery &delivery: deliveries_copy) {
         if (!getFirstFitUsed(delivery)) {
             getFirstFitNew(available_couriers, delivery);
         }
@@ -96,13 +100,14 @@ Allocation Scheduler::scenario2() {
 }
 
 Allocation Scheduler::scenario3() {
-    std::sort(deliveries.begin(),deliveries.end(), compareDuration);
+    std::vector<Delivery> deliveries_copy(deliveries.begin(), deliveries.end());
+    std::sort(deliveries_copy.begin(),deliveries_copy.end(), compareDuration);
 
     initValues();
 
     used_couriers.push_back({INT_MAX,INT_MAX,0});
 
-    for (Delivery& delivery : deliveries) {
+    for (Delivery& delivery : deliveries_copy) {
         if(!(insertExpressDelivery(delivery))){
             break;
         }
@@ -121,19 +126,6 @@ void Scheduler::initValues() {
 
 bool Scheduler::getFirstFitUsed(const Delivery &delivery) {
     for (int i = 0; i < used_couriers.size(); i++) {
-/*
-        if (delivery.getVolume() <= (couriers[i].getVolume() - used_sizes[i].first) &&
-            delivery.getWeight() <= (couriers[i].getWeight() - used_sizes[i].second)) {
-            used_sizes[i].first += delivery.getVolume();
-            used_sizes[i].second += delivery.getWeight();
-            allocated_deliveries[i].push_back(delivery);
-
-            allocation.addDelivery(delivery);
-
-            return true;
-        }
-*/
-
         if (delivery.getVolume() <= used_couriers[i].getFreeVolume() &&
             delivery.getWeight() <= used_couriers[i].getFreeWeight())
         {

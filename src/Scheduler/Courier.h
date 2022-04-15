@@ -1,6 +1,8 @@
 #ifndef COURIER_H
 #define COURIER_H
 
+#include "Delivery.h"
+
 #include <string>
 #include <sstream>
 #include <vector>
@@ -76,6 +78,24 @@ public:
    void updateFreeWeight(int w);
 
    /**
+    * Get the current reward for the deliveries
+    * @return An integer with the money gained from the current deliveries
+    */
+   int getCurrentReward() const;
+
+   /**
+    * Get current profit gained from Courier.
+    * @return The difference between money gained and cost.
+    */
+   int getProfit() const;
+
+   /**
+    * Add a new delivery to the Courier to update its values.
+    * @param delivery Delivery object allocated to the Courier.
+    */
+   void addDelivery(const Delivery& delivery);
+
+   /**
     * Get the price per capacity of the van.
     * @return Double with the amount of space per cost unit.
     */
@@ -92,6 +112,7 @@ private:
    int weight;
    int free_weight;
    int free_volume;
+   int current_reward;
 
 };
 

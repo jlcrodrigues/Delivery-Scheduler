@@ -40,13 +40,14 @@ void State::displayCouriers(App* app, const Allocation& allocation) const {
     while (page != -1) {
         printBreak();
         std::vector<std::vector<std::string> > table;
-        table.push_back({"Volume", "Weight", "Cost", "Deliveries"});
+        table.push_back({"Volume", "Weight", "Cost", "Deliveries", "Profit"});
         for (int i = 0; i < couriers.size(); i++)
             table.push_back({
                                     std::to_string(couriers[i].getVolume()),
                                     std::to_string(couriers[i].getWeight()),
                                     std::to_string(couriers[i].getCost()),
-                                    std::to_string(deliveries[i].size())
+                                    std::to_string(deliveries[i].size()),
+                                    std::to_string(couriers[i].getProfit())
                             });
         displayTable(table, page);
         getNextPage(app, page, n_pages);

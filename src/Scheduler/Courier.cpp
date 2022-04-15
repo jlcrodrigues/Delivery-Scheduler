@@ -4,8 +4,9 @@ Courier::Courier(const int &volume, const int &weight, const int &cost) {
     this->volume = volume;
     this->weight = weight;
     this->cost = cost;
-    free_volume = volume;
-    free_weight = weight;
+    this->free_volume = volume;
+    this->free_weight = weight;
+    this->current_reward = 0;
 }
 
 Courier::Courier(const std::string &row) {
@@ -52,6 +53,20 @@ int Courier::getFreeWeight() const{
 void Courier::updateFreeWeight(int w) {
     free_weight -= w;
 }
+
+int Courier::getCurrentReward() const {
+    return current_reward;
+}
+
+int Courier::getProfit() const {
+    return current_reward - cost;
+}
+
+void Courier::addDelivery(const Delivery& delivery) {
+    updateFreeVolume(delivery.getVolume());
+    updateFreeWeight(delivery.getWeight());
+    current_reward += delivery.getCompensation();
+};
 
 double Courier::getCostRatio() const {
     return cost / (weight + volume);

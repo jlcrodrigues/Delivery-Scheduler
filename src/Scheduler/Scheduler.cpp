@@ -129,10 +129,8 @@ bool Scheduler::getFirstFitUsed(const Delivery &delivery) {
         if (delivery.getVolume() <= used_couriers[i].getFreeVolume() &&
             delivery.getWeight() <= used_couriers[i].getFreeWeight())
         {
-            used_couriers[i].updateFreeVolume(delivery.getVolume());
-            used_couriers[i].updateFreeWeight(delivery.getWeight());
+            used_couriers[i].addDelivery(delivery);
             allocated_deliveries[i].push_back(delivery);
-
             allocation.addDelivery(delivery);
 
             return true;
@@ -147,8 +145,7 @@ bool Scheduler::getFirstFitNew(std::list<Courier> &available_couriers, Delivery&
         if (delivery.getVolume() <= it->getVolume() &&
             delivery.getWeight() <= it->getWeight()) {
 
-            it->updateFreeVolume(delivery.getVolume());
-            it->updateFreeWeight(delivery.getWeight());
+            it->addDelivery(delivery);
             used_couriers.push_back(*it);
             allocated_deliveries.push_back({delivery});
 

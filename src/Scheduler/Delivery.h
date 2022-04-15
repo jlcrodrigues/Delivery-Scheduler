@@ -67,7 +67,7 @@ public:
     * Get capacity of delivery considering volume and weight.
     * @return Sum of volume and weight.
     */
-    int getCapacity() const;
+    float getCapacity() const;
 private:
     int compensation;
     int duration;

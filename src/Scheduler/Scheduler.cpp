@@ -114,7 +114,6 @@ Allocation Scheduler::scenario3() {
 
 void Scheduler::initValues() {
     used_couriers.clear();
-    used_sizes.clear();
     allocated_deliveries.clear();
     allocation.clear();
     time_available = 28800;
@@ -122,10 +121,24 @@ void Scheduler::initValues() {
 
 bool Scheduler::getFirstFitUsed(const Delivery &delivery) {
     for (int i = 0; i < used_couriers.size(); i++) {
+/*
         if (delivery.getVolume() <= (couriers[i].getVolume() - used_sizes[i].first) &&
             delivery.getWeight() <= (couriers[i].getWeight() - used_sizes[i].second)) {
             used_sizes[i].first += delivery.getVolume();
             used_sizes[i].second += delivery.getWeight();
+            allocated_deliveries[i].push_back(delivery);
+
+            allocation.addDelivery(delivery);
+
+            return true;
+        }
+*/
+
+        if (delivery.getVolume() <= used_couriers[i].getFreeVolume() &&
+            delivery.getWeight() <= used_couriers[i].getFreeWeight())
+        {
+            used_couriers[i].updateFreeVolume(delivery.getVolume());
+            used_couriers[i].updateFreeWeight(delivery.getWeight());
             allocated_deliveries[i].push_back(delivery);
 
             allocation.addDelivery(delivery);
@@ -143,7 +156,6 @@ bool Scheduler::getFirstFitNew(std::list<Courier> &available_couriers, Delivery&
             delivery.getWeight() <= it->getWeight()) {
             used_couriers.push_back(*it);
             allocated_deliveries.push_back({delivery});
-            used_sizes.emplace_back(delivery.getVolume(), delivery.getWeight());
 
             allocation.addWeight(delivery.getWeight(), it->getWeight());
             allocation.addVolume(delivery.getVolume(), it->getVolume());

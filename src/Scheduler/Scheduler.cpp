@@ -154,6 +154,9 @@ bool Scheduler::getFirstFitNew(std::list<Courier> &available_couriers, Delivery&
     for (; it != available_couriers.end(); it++) {
         if (delivery.getVolume() <= it->getVolume() &&
             delivery.getWeight() <= it->getWeight()) {
+
+            it->updateFreeVolume(delivery.getVolume());
+            it->updateFreeWeight(delivery.getWeight());
             used_couriers.push_back(*it);
             allocated_deliveries.push_back({delivery});
 

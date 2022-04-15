@@ -45,11 +45,35 @@ public:
     */
    int getVolume() const;
 
+    /**
+     * Get vans's free Volume.
+     * @return Integer with van's free volume.
+     */
+   int getFreeVolume() const;
+
+    /**
+     * Update van's free volume.
+     * @param vol Value to subtract to free volume.
+     */
+   void updateFreeVolume(const int vol);
+
    /**
     * Get the courier's van weight.
     * @return Integer with the van's weight.
     */
    int getWeight() const;
+
+   /**
+    * Get vans's free weight.
+    * @return Integer with van's free weight.
+    */
+   int getFreeWeight() const;
+
+   /**
+    * Update van's free weight.
+    * @param w Value to subtract to free weight.
+    */
+   void updateFreeWeight(int w);
 
    /**
     * Get the price per capacity of the van.
@@ -61,11 +85,13 @@ public:
     * Get the capacity of a van considering volume and weight.
     * @return Sum of with and volume.
     */
-    int getCapacity() const;
+    float getCapacity() const;
 private:
    int cost;
    int volume;
    int weight;
+   int free_weight;
+   int free_volume;
 
 };
 

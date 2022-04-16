@@ -111,7 +111,7 @@ public:
      * Getter for allocated deliveries.
      * @return Vector with courier's allocated deliveries.
      */
-    std::vector<Delivery> getAllocatedDeliveries();
+    std::vector<Delivery> getAllocatedDeliveries() const;
 private:
    int cost;
    int volume;

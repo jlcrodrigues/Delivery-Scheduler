@@ -32,9 +32,8 @@ void State::printInvalidOption() const
     std::cout << "Invalid option. Try again.\n";
 }
 
-void State::displayCouriers(App* app, const Allocation& allocation) const {
-    std::vector<Courier> couriers = allocation.getUsedCouriers();
-//    std::vector<std::vector<Delivery> > deliveries = allocation.getDeliveries();
+void State::displayCouriers(App* app, Allocation& allocation) const {
+    std::vector<Courier>& couriers = allocation.getUsedCouriers();
     int page = 1;
     int n_pages = (couriers.size() + ITEMS_PER_PAGE - 1) / ITEMS_PER_PAGE;
     while (page != -1) {

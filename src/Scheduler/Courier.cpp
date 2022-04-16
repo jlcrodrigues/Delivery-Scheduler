@@ -77,6 +77,6 @@ float Courier::getCapacity() const {
     return (weight + volume) / 2;
 }
 
-std::vector<Delivery> Courier::getAllocatedDeliveries() {
+std::vector<Delivery> Courier::getAllocatedDeliveries() const {
     return allocated_deliveries;
 }

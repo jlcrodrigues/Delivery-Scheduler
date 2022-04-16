@@ -97,8 +97,6 @@ private:
    std::vector<Delivery> deliveries;
    int time_available;
 
-   std::vector<Courier> used_couriers;
-
 };
 
 

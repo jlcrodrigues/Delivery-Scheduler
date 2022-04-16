@@ -1,16 +1,5 @@
 #include "Allocation.h"
 
-Allocation::Allocation(std::vector<Courier> couriers, std::vector<std::vector<Delivery>> deliveries) {
-    this->couriers = couriers;
-    this->deliveries = deliveries;
-    used_weight = 0;
-    total_weight = 0;
-    used_volume = 0;
-    total_volume = 0;
-    reward = 0;
-    cost = 0;
-}
-
 std::ostream& operator<<(std::ostream& os, const Allocation& allocation) {
     os << "Allocated " << allocation.getDeliveriesCount() << " packages through ";
     os << allocation.couriers.size() << " vans.\n";
@@ -37,6 +26,13 @@ void Allocation::addProfit(const int &reward, const int &cost) {
     this->cost += cost;
 }
 
+void Allocation::addCourier(const Courier &courier) {
+    this->couriers.push_back(courier);
+    this->total_volume += courier.getVolume();
+    this->total_weight += courier.getWeight();
+    this->cost += courier.getCost();
+}
+
 void Allocation::addDelivery(const Delivery &delivery) {
     this->used_weight += delivery.getWeight();
     this->used_volume += delivery.getVolume();
@@ -58,14 +54,6 @@ void Allocation::setProfit(const int &reward, const int &cost) {
     this->cost = cost;
 }
 
-void Allocation::setCouriers(const std::vector<Courier>& couriers) {
-    this->couriers = couriers;
-}
-
-void Allocation::setDeliveries(const std::vector<std::vector<Delivery> >& deliveries) {
-    this->deliveries = deliveries;
-}
-
 void Allocation::clear() {
     used_weight = 0;
     total_weight = 0;
@@ -74,26 +62,15 @@ void Allocation::clear() {
     reward = 0;
     cost = 0;
     couriers.clear();
-    deliveries.clear();
 }
 
-std::vector<Courier> Allocation::getUsedCouriers() const {
+std::vector<Courier>& Allocation::getUsedCouriers() {
     return couriers;
 }
 
-std::vector<std::vector<Delivery> > Allocation::getDeliveries() const {
-    return deliveries;
-}
-
 int Allocation::getDeliveriesCount() const {
-/*
     int count = 0;
-    for (auto & v : deliveries)
-        count += v.size();
-    return count;
-*/
-    int count = 0;
-    for (auto & c: getUsedCouriers()) {
+    for (auto & c: couriers) {
        count += c.getAllocatedDeliveries().size();
     }
     return count;

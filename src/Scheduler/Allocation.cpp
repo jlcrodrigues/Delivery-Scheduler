@@ -86,8 +86,15 @@ std::vector<std::vector<Delivery> > Allocation::getDeliveries() const {
 }
 
 int Allocation::getDeliveriesCount() const {
+/*
     int count = 0;
     for (auto & v : deliveries)
         count += v.size();
+    return count;
+*/
+    int count = 0;
+    for (auto & c: getUsedCouriers()) {
+       count += c.getAllocatedDeliveries().size();
+    }
     return count;
 }

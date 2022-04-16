@@ -106,6 +106,12 @@ public:
     * @return Sum of with and volume.
     */
     float getCapacity() const;
+
+    /**
+     * Getter for allocated deliveries.
+     * @return Vector with courier's allocated deliveries.
+     */
+    std::vector<Delivery> getAllocatedDeliveries();
 private:
    int cost;
    int volume;
@@ -113,6 +119,8 @@ private:
    int free_weight;
    int free_volume;
    int current_reward;
+
+   std::vector<Delivery> allocated_deliveries;
 
 };
 

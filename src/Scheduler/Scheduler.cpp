@@ -58,10 +58,11 @@ bool compareDuration(const Delivery& d1, const Delivery& d2){
 
 
 Allocation Scheduler::scenario1() {
+
     std::vector<Courier> couriers_copy(couriers.begin(), couriers.end());
     std::sort(couriers_copy.begin(), couriers_copy.end(), compareCouriersSize);
     std::vector<Delivery> deliveries_copy(deliveries.begin(), deliveries.end());
-    std::sort(deliveries_copy.begin(), deliveries_copy.end(), compareDeliveriesCost);
+    std::sort(deliveries_copy.begin(), deliveries_copy.end(), compareDeliveriesSize);
 
     std::list<Courier> available_couriers(couriers_copy.begin(), couriers_copy.end());
 
@@ -74,7 +75,6 @@ Allocation Scheduler::scenario1() {
     }
 
     allocation.setCouriers(used_couriers);
-    allocation.setDeliveries(allocated_deliveries);
     return allocation;
 }
 
@@ -95,7 +95,6 @@ Allocation Scheduler::scenario2() {
     }
 
     allocation.setCouriers(used_couriers);
-    allocation.setDeliveries(allocated_deliveries);
     return allocation;
 }
 
@@ -112,14 +111,12 @@ Allocation Scheduler::scenario3() {
             break;
         }
     }
-    allocation.setDeliveries(allocated_deliveries);
     allocation.setCouriers(used_couriers);
     return allocation;
 }
 
 void Scheduler::initValues() {
     used_couriers.clear();
-    allocated_deliveries.clear();
     allocation.clear();
     time_available = 28800;
 }
@@ -130,7 +127,6 @@ bool Scheduler::getFirstFitUsed(const Delivery &delivery) {
             delivery.getWeight() <= used_couriers[i].getFreeWeight())
         {
             used_couriers[i].addDelivery(delivery);
-            allocated_deliveries[i].push_back(delivery);
             allocation.addDelivery(delivery);
 
             return true;
@@ -147,7 +143,6 @@ bool Scheduler::getFirstFitNew(std::list<Courier> &available_couriers, Delivery&
 
             it->addDelivery(delivery);
             used_couriers.push_back(*it);
-            allocated_deliveries.push_back({delivery});
 
             allocation.addWeight(delivery.getWeight(), it->getWeight());
             allocation.addVolume(delivery.getVolume(), it->getVolume());
@@ -162,7 +157,7 @@ bool Scheduler::getFirstFitNew(std::list<Courier> &available_couriers, Delivery&
 
 bool Scheduler::insertExpressDelivery(Delivery& delivery){
     if (delivery.getDuration()<=time_available){
-        allocated_deliveries.push_back({delivery});
+        used_couriers[0].addDelivery(delivery);
         allocation.addWeight(delivery.getWeight(), delivery.getWeight());
         allocation.addVolume(delivery.getVolume(), delivery.getVolume());
         allocation.addProfit(delivery.getCompensation(), 0);

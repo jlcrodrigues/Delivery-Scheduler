@@ -98,7 +98,6 @@ private:
    int time_available;
 
    std::vector<Courier> used_couriers;
-   std::vector<std::vector<Delivery> > allocated_deliveries;
 
 };
 

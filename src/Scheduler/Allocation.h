@@ -86,6 +86,11 @@ public:
     */
    std::vector<Courier>& getUsedCouriers();
 
+   /**
+    * Remove the couriers that are not generating profit.
+    */
+   void clearLosingCouriers();
+
 private:
    /**
     * Count the total number of deliveries.

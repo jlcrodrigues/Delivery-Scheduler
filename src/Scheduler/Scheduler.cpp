@@ -72,6 +72,7 @@ Allocation Scheduler::scenario1() {
         }
     }
 
+    allocation.clearLosingCouriers();
     return allocation;
 }
 
@@ -91,6 +92,7 @@ Allocation Scheduler::scenario2() {
         }
     }
 
+    allocation.clearLosingCouriers();
     return allocation;
 }
 

@@ -45,12 +45,11 @@ bool compareDeliveriesSize(const Delivery& d1, Delivery& d2) {
     return (d1.getCapacity() > d2.getCapacity());
 }
 
-
 bool compareCouriersCost(const Courier& c1, const Courier& c2) {
     return (c1.getCostRatio() < c2.getCostRatio());
 }
 bool compareDeliveriesCost(const Delivery& d1, const Delivery& d2) {
-    return (d1.getCompensationRatio() < d2.getCompensationRatio());
+    return (d1.getCompensationRatio() > d2.getCompensationRatio());
 }
 bool compareDuration(const Delivery& d1, const Delivery& d2){
     return (d1.getDuration() < d2.getDuration());
@@ -61,7 +60,7 @@ Allocation Scheduler::scenario1() {
     std::vector<Courier> couriers_copy(couriers.begin(), couriers.end());
     std::sort(couriers_copy.begin(), couriers_copy.end(), compareCouriersSize);
     std::vector<Delivery> deliveries_copy(deliveries.begin(), deliveries.end());
-    std::sort(deliveries_copy.begin(), deliveries_copy.end(), compareDeliveriesCost);
+    std::sort(deliveries_copy.begin(), deliveries_copy.end(), compareDeliveriesSize);
 
     std::list<Courier> available_couriers(couriers_copy.begin(), couriers_copy.end());
 
@@ -73,8 +72,6 @@ Allocation Scheduler::scenario1() {
         }
     }
 
-    allocation.setCouriers(used_couriers);
-    allocation.setDeliveries(allocated_deliveries);
     return allocation;
 }
 
@@ -94,12 +91,11 @@ Allocation Scheduler::scenario2() {
         }
     }
 
-    allocation.setCouriers(used_couriers);
-    allocation.setDeliveries(allocated_deliveries);
     return allocation;
 }
 
 Allocation Scheduler::scenario3() {
+    std::vector<Courier>& used_couriers = allocation.getUsedCouriers();
     std::vector<Delivery> deliveries_copy(deliveries.begin(), deliveries.end());
     std::sort(deliveries_copy.begin(),deliveries_copy.end(), compareDuration);
 
@@ -112,25 +108,21 @@ Allocation Scheduler::scenario3() {
             break;
         }
     }
-    allocation.setDeliveries(allocated_deliveries);
-    allocation.setCouriers(used_couriers);
     return allocation;
 }
 
 void Scheduler::initValues() {
-    used_couriers.clear();
-    allocated_deliveries.clear();
     allocation.clear();
     time_available = 28800;
 }
 
 bool Scheduler::getFirstFitUsed(const Delivery &delivery) {
+    std::vector<Courier>& used_couriers = allocation.getUsedCouriers();
     for (int i = 0; i < used_couriers.size(); i++) {
         if (delivery.getVolume() <= used_couriers[i].getFreeVolume() &&
             delivery.getWeight() <= used_couriers[i].getFreeWeight())
         {
             used_couriers[i].addDelivery(delivery);
-            allocated_deliveries[i].push_back(delivery);
             allocation.addDelivery(delivery);
 
             return true;
@@ -140,18 +132,15 @@ bool Scheduler::getFirstFitUsed(const Delivery &delivery) {
 }
 
 bool Scheduler::getFirstFitNew(std::list<Courier> &available_couriers, Delivery& delivery) {
+    std::vector<Courier>& used_couriers = allocation.getUsedCouriers();
     auto it = available_couriers.begin();
     for (; it != available_couriers.end(); it++) {
         if (delivery.getVolume() <= it->getVolume() &&
             delivery.getWeight() <= it->getWeight()) {
 
             it->addDelivery(delivery);
-            used_couriers.push_back(*it);
-            allocated_deliveries.push_back({delivery});
-
-            allocation.addWeight(delivery.getWeight(), it->getWeight());
-            allocation.addVolume(delivery.getVolume(), it->getVolume());
-            allocation.addProfit(delivery.getCompensation(), it->getCost());
+            allocation.addCourier(*it);
+            allocation.addDelivery(delivery);
 
             available_couriers.erase(it);
             return true;
@@ -161,8 +150,9 @@ bool Scheduler::getFirstFitNew(std::list<Courier> &available_couriers, Delivery&
 }
 
 bool Scheduler::insertExpressDelivery(Delivery& delivery){
+    std::vector<Courier>& used_couriers = allocation.getUsedCouriers();
     if (delivery.getDuration()<=time_available){
-        allocated_deliveries.push_back({delivery});
+        used_couriers[0].addDelivery(delivery);
         allocation.addWeight(delivery.getWeight(), delivery.getWeight());
         allocation.addVolume(delivery.getVolume(), delivery.getVolume());
         allocation.addProfit(delivery.getCompensation(), 0);

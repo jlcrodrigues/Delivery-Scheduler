@@ -66,6 +66,7 @@ void Courier::addDelivery(const Delivery& delivery) {
     updateFreeVolume(delivery.getVolume());
     updateFreeWeight(delivery.getWeight());
     current_reward += delivery.getCompensation();
+    allocated_deliveries.push_back(delivery);
 };
 
 double Courier::getCostRatio() const {
@@ -74,4 +75,8 @@ double Courier::getCostRatio() const {
 
 float Courier::getCapacity() const {
     return (weight + volume) / 2;
+}
+
+std::vector<Delivery> Courier::getAllocatedDeliveries() const {
+    return allocated_deliveries;
 }

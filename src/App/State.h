@@ -49,7 +49,7 @@ protected:
     * @param app Pointer to the main application.
     * @param couriers A vector of Courier objects to be displayed.
     */
-   void displayCouriers(App* app, const Allocation& allocation) const;
+   void displayCouriers(App* app, Allocation& allocation) const;
 
    /**
     * Find the maximum length per column for a column row.

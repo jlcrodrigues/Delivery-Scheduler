@@ -68,6 +68,22 @@ std::vector<Courier>& Allocation::getUsedCouriers() {
     return couriers;
 }
 
+void Allocation::clearLosingCouriers() {
+    auto it = couriers.begin();
+    for (; it != couriers.end();) {
+        if (it->getProfit() < 0) {
+            it = couriers.erase(it);
+            used_weight -= it->getWeight() - it->getFreeWeight();
+            total_weight -= it->getWeight();
+            used_volume -= it->getVolume() - it->getFreeVolume();
+            total_volume -= it->getVolume();
+            reward -= it->getCurrentReward();
+            cost -= it->getCost();
+        }
+        else it++;
+    }
+}
+
 int Allocation::getDeliveriesCount() const {
     int count = 0;
     for (auto & c: couriers) {

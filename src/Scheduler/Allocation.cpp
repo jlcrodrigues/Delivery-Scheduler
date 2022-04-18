@@ -1,9 +1,9 @@
 #include "Allocation.h"
 
 std::ostream& operator<<(std::ostream& os, const Allocation& allocation) {
-    os << "Allocated " << allocation.getDeliveriesCount() << " packages through ";
+    os << "Allocated " << allocation.getDeliveriesCount();
+    os << " (" << allocation.getDeliveriesRatio() << "%)" << " packages through ";
     os << allocation.couriers.size() << " vans.\n";
-    os << "Non-Allocated Deliveries: " << allocation.non_delivered.size() << "\n";
     os << "Used volume: " << (double)(allocation.used_volume  * 100 / allocation.total_volume) << "% ("
         << allocation.used_volume << "/" << allocation.total_volume << ").\n";
     os << "Used weight: " << (allocation.used_weight * 100/ allocation.total_weight) << "% ("
@@ -102,4 +102,9 @@ int Allocation::getDeliveriesCount() const {
        count += c.getAllocatedDeliveries().size();
     }
     return count;
+}
+
+int Allocation::getDeliveriesRatio() const {
+    int delivered = getDeliveriesCount();
+    return delivered * 100 / (delivered + non_delivered.size());
 }

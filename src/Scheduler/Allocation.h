@@ -107,6 +107,12 @@ private:
     */
    int getDeliveriesCount() const;
 
+   /**
+    * Get the percentage of delivered packages.
+    * @return Integer representing the percentage of packages delivered.
+    */
+   int getDeliveriesRatio() const;
+
    int used_weight;
    int total_weight;
    int used_volume;

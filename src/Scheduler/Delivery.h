@@ -72,8 +72,7 @@ private:
     int compensation;
     int duration;
     int volume;
-
-   int weight;
+    int weight;
 
 };
 

@@ -64,11 +64,14 @@ Allocation Scheduler::scenario1() {
 
     std::list<Courier> available_couriers(couriers_copy.begin(), couriers_copy.end());
 
+    std::vector<Delivery>& non_delivered = allocation.getNonDelivered();
+
     initValues();
 
     for (Delivery& delivery : deliveries_copy) {
         if (!getFirstFitUsed(delivery)) {
-            getFirstFitNew(available_couriers, delivery);
+            if (!getFirstFitNew(available_couriers, delivery))
+                non_delivered.push_back(delivery);
         }
     }
 
@@ -84,11 +87,15 @@ Allocation Scheduler::scenario2() {
 
     std::list<Courier> available_couriers(couriers_copy.begin(), couriers_copy.end());
 
+    std::vector<Delivery>& non_delivered = allocation.getNonDelivered();
+
     initValues();
 
     for (Delivery &delivery: deliveries_copy) {
         if (!getFirstFitUsed(delivery)) {
-            getFirstFitNew(available_couriers, delivery);
+            if (!getFirstFitNew(available_couriers, delivery)) {
+                non_delivered.push_back(delivery);
+            }
         }
     }
 
@@ -101,24 +108,35 @@ Allocation Scheduler::scenario3() {
     std::vector<Delivery> deliveries_copy(deliveries.begin(), deliveries.end());
     std::sort(deliveries_copy.begin(),deliveries_copy.end(), compareDuration);
 
+    std::vector<Delivery>& non_delivered = allocation.getNonDelivered();
+
     initValues();
 
     used_couriers.push_back({INT_MAX,INT_MAX,0});
 
-    for (Delivery& delivery : deliveries_copy) {
-        if(!(insertExpressDelivery(delivery))){
+    auto it = deliveries_copy.begin();
+    for (; it != deliveries_copy.end(); it++) {
+        if(!(insertExpressDelivery(*it))){
             break;
         }
     }
+    for (; it != deliveries_copy.end(); it++) {
+        non_delivered.push_back(*it);
+    }
+
     return allocation;
 }
 
 void Scheduler::initValues() {
+    std::vector<Delivery>& non_delivered = allocation.getNonDelivered();
+
+    non_delivered.clear();
     allocation.clear();
     time_available = 28800;
 }
 
 bool Scheduler::getFirstFitUsed(const Delivery &delivery) {
+    std::vector<Delivery>& non_delivered = allocation.getNonDelivered();
     std::vector<Courier>& used_couriers = allocation.getUsedCouriers();
     for (int i = 0; i < used_couriers.size(); i++) {
         if (delivery.getVolume() <= used_couriers[i].getFreeVolume() &&

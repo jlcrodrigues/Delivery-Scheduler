@@ -1,7 +1,8 @@
 #include "Allocation.h"
 
 std::ostream& operator<<(std::ostream& os, const Allocation& allocation) {
-    os << "Allocated " << allocation.getDeliveriesCount() << " packages through ";
+    os << "Allocated " << allocation.getDeliveriesCount();
+    os << " (" << allocation.getDeliveriesRatio() << "%)" << " packages through ";
     os << allocation.couriers.size() << " vans.\n";
     os << "Used volume: " << (double)(allocation.used_volume  * 100 / allocation.total_volume) << "% ("
         << allocation.used_volume << "/" << allocation.total_volume << ").\n";
@@ -68,10 +69,15 @@ std::vector<Courier>& Allocation::getUsedCouriers() {
     return couriers;
 }
 
+std::vector<Delivery>& Allocation::getNonDelivered() {
+    return non_delivered;
+}
+
 void Allocation::clearLosingCouriers() {
     auto it = couriers.begin();
     for (; it != couriers.end();) {
         if (it->getProfit() < 0) {
+            clearLosingCouriersAux(*it);
             it = couriers.erase(it);
             used_weight -= it->getWeight() - it->getFreeWeight();
             total_weight -= it->getWeight();
@@ -84,10 +90,21 @@ void Allocation::clearLosingCouriers() {
     }
 }
 
+void Allocation::clearLosingCouriersAux(const Courier& courier) {
+    for (auto d: courier.getAllocatedDeliveries()) {
+        non_delivered.push_back(d);
+    }
+}
+
 int Allocation::getDeliveriesCount() const {
     int count = 0;
     for (auto & c: couriers) {
        count += c.getAllocatedDeliveries().size();
     }
     return count;
+}
+
+int Allocation::getDeliveriesRatio() const {
+    int delivered = getDeliveriesCount();
+    return delivered * 100 / (delivered + non_delivered.size());
 }

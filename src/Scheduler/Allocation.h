@@ -87,9 +87,18 @@ public:
    std::vector<Courier>& getUsedCouriers();
 
    /**
+    * Get the non delivered Deliveries.
+    * @return Vector with non delivered Deliveries.
+    */
+   std::vector<Delivery>& getNonDelivered();
+
+   /**
     * Remove the couriers that are not generating profit.
     */
    void clearLosingCouriers();
+
+
+   void clearLosingCouriersAux(const Courier& courier);
 
 private:
    /**
@@ -98,6 +107,12 @@ private:
     */
    int getDeliveriesCount() const;
 
+   /**
+    * Get the percentage of delivered packages.
+    * @return Integer representing the percentage of packages delivered.
+    */
+   int getDeliveriesRatio() const;
+
    int used_weight;
    int total_weight;
    int used_volume;
@@ -105,6 +120,7 @@ private:
    int reward;
    int cost;
    std::vector<Courier> couriers;
+   std::vector<Delivery> non_delivered;
 };
 
 

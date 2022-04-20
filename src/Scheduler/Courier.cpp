@@ -70,7 +70,7 @@ void Courier::addDelivery(const Delivery& delivery) {
 };
 
 double Courier::getCostRatio() const {
-    return cost / (weight + volume);
+    return cost / ((weight + volume) / 2);
 }
 
 float Courier::getCapacity() const {

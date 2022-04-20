@@ -78,13 +78,13 @@ void Allocation::clearLosingCouriers() {
     for (; it != couriers.end();) {
         if (it->getProfit() < 0) {
             clearLosingCouriersAux(*it);
-            it = couriers.erase(it);
             used_weight -= it->getWeight() - it->getFreeWeight();
             total_weight -= it->getWeight();
             used_volume -= it->getVolume() - it->getFreeVolume();
             total_volume -= it->getVolume();
             reward -= it->getCurrentReward();
             cost -= it->getCost();
+            it = couriers.erase(it);
         }
         else it++;
     }

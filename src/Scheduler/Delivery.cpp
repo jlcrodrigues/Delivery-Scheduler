@@ -43,7 +43,7 @@ int Delivery::getWeight() const {
 }
 
 double Delivery::getCompensationRatio() const {
-    return compensation / (weight + volume);
+    return compensation / ((weight + volume) / 2);
 }
 
 float Delivery::getCapacity() const {

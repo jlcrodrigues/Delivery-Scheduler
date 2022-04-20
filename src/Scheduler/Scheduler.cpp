@@ -75,7 +75,7 @@ Allocation Scheduler::scenario1() {
         }
     }
 
-    allocation.clearLosingCouriers();
+    //allocation.clearLosingCouriers();
     return allocation;
 }
 

@@ -4,6 +4,7 @@ App::App()
 {
     scheduler = new Scheduler("../data/vans.csv",
                               "../data/deliveries.csv");
+    scheduler->setDeliveriesPerDay(100);
 }
 
 void App::run()
@@ -17,6 +18,12 @@ void App::run()
 Scheduler* App::getScheduler() const
 {
     return scheduler;
+}
+
+void App::resetScheduler() {
+    scheduler = new Scheduler("../data/vans.csv",
+                                      "../data/deliveries.csv");
+    scheduler->setDeliveriesPerDay(100);
 }
 
 void App::setState(State* state)

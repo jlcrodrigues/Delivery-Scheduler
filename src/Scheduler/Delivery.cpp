@@ -49,3 +49,11 @@ double Delivery::getCompensationRatio() const {
 float Delivery::getCapacity() const {
     return (weight + volume) / 2;
 }
+
+int Delivery::getDay() const {
+    return day;
+}
+
+void Delivery::setDay(const int& day) {
+    this->day = day;
+}

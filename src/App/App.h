@@ -26,6 +26,11 @@ public:
    Scheduler* getScheduler() const;
 
    /**
+    * Reset the scheduler.
+    */
+   void resetScheduler();
+
+   /**
     * Change the app's current state.
     * @param state Any state derived class.
     */

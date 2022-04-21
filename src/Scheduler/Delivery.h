@@ -68,11 +68,25 @@ public:
     * @return Sum of volume and weight.
     */
     float getCapacity() const;
+
+    /**
+     * Get the day when the delivery was first allocated.
+     * @return Integer with the day the delivery was first allocated.
+     */
+    int getDay() const;
+
+    /**
+     * Set the day when the delivery is first allocated.
+     * @param day The current day.
+     */
+    void setDay(const int& day);
+
 private:
     int compensation;
     int duration;
     int volume;
     int weight;
+    int day;
 
 };
 

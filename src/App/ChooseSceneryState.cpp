@@ -5,13 +5,17 @@ void ChooseSceneryState::step(App *app) {
     std::cout << "\tScenery\n\n";
     std::cout << "3) Optimize express deliveries.\n";
     std::cout << "2) Optimize company profit.\n";
-    std::cout << "1) Optimize number of couriers.\n";
+    std::cout << "1) Optimize number of couriers.\n\n";
+    std::cout << "4) Go Back.\n";
     std::cout << "0) Exit.\n";
 
     while (true) {
         int option = readOption(app);
 
         switch (option) {
+            case 4:
+                app->setState(new InitialState());
+                return;
             case 3:
                 app->setState(new Scenery3State());
                 return;

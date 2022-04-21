@@ -11,7 +11,7 @@
 class Allocation {
 public:
    /** Allocation's default constructor. **/
-   Allocation() = default;
+   Allocation();
 
    /**
     * ostream operator for Allocation.
@@ -112,6 +112,18 @@ private:
     * @return Integer representing the percentage of packages delivered.
     */
    int getDeliveriesRatio() const;
+
+   /**
+    * Get the percentage of used volume.
+    * @return Percentage of used volume across all couriers.
+    */
+   int getVolumeRatio() const;
+
+   /**
+    * Get the percentage of used weight.
+    * @return Percentage of used weight across all couriers.
+    */
+   int getWeightRatio() const;
 
    int used_weight;
    int total_weight;

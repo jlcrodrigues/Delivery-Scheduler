@@ -11,6 +11,9 @@ Courier::Courier(const int &volume, const int &weight, const int &cost) {
 
 Courier::Courier(const std::string &row) {
     loadFromCsv(row);
+    this->free_volume = volume;
+    this->free_weight = weight;
+    this->current_reward = 0;
 }
 
 void Courier::loadFromCsv(const std::string &row) {

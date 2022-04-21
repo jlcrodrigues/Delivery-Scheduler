@@ -12,12 +12,16 @@ set(SOURCE_FILES
         src/App/ChooseSceneryState.h
         src/App/InitialState.cpp
         src/App/InitialState.h
+        src/App/NoDeliveriesState.cpp
+        src/App/NoDeliveriesState.h
         src/App/Scenery1State.cpp
         src/App/Scenery1State.h
         src/App/Scenery2State.cpp
         src/App/Scenery2State.h
         src/App/Scenery3State.cpp
         src/App/Scenery3State.h
+        src/App/SettingsState.cpp
+        src/App/SettingsState.h
         src/App/State.cpp
         src/App/State.h
 

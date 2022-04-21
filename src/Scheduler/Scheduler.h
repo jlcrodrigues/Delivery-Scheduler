@@ -37,6 +37,24 @@ public:
    void loadDeliveries(const std::string& file_path);
 
    /**
+    * Get the amount of deliveries being attempted to allocate per day.
+    * @return Integer with the amount of deliveries tried to allocate daily.
+    */
+   int getDeliveriesPerDay() const;
+
+   /**
+    * Change the amount of deliveries considered in a day.
+    * @param amount The amount of deliveries to be allocated in a day.
+    */
+   void setDeliveriesPerDay(const int& amount);
+
+   /**
+    * Get the current day.
+    * @return Integer with the current day.
+    */
+   int getDay() const;
+
+   /**
     * Get the courier's vector.
     * @return A Vector of courier's objects.
     */
@@ -47,6 +65,12 @@ public:
     * @return A Vector of deliveries objects.
     */
    std::vector<Delivery> getDeliveries() const;
+
+   /**
+    * Check if the scheduler still has deliveries remaining.
+    * @return True if there are any deliveries left and false otherwise.
+    */
+   bool hasDeliveries() const;
 
    /**
     * Get allocation for the scenario 1. Allocates the deliveries to optimize number of couriers.
@@ -88,13 +112,22 @@ private:
    /**
     * Try to allocate an express delivery on the company's courier.
     * @param delivery A Delivery object to be allocated.
+    * @param courier The courier being used.
     * @return Returns true if the express delivery was successful allocated in the company's courier.
     */
    bool insertExpressDelivery(Delivery& delivery);
 
+   /**
+    * Get all the deliveries for the next day.
+    */
+   void setNextDeliveries();
+
    Allocation allocation;
    std::vector<Courier> couriers;
    std::vector<Delivery> deliveries;
+   std::vector<Delivery> daily_deliveries;
+   int current_day;
+   int deliveries_per_day;
    int time_available;
 
 };

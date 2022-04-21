@@ -42,6 +42,14 @@ int Scheduler::getDay() const {
     return current_day;
 }
 
+int Scheduler::getTimeAvailable() const {
+    return time_available;
+}
+
+void Scheduler::setTimeAvailable(const int &time_available) {
+    this->time_available = time_available;
+}
+
 std::vector<Courier> Scheduler::getCouriers() const {
     return couriers;
 }
@@ -167,7 +175,6 @@ void Scheduler::initValues() {
 
     non_delivered.clear();
     allocation.clear();
-    time_available = 28800;
 }
 
 bool Scheduler::getFirstFitUsed(const Delivery &delivery) {

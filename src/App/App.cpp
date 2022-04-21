@@ -22,9 +22,11 @@ Scheduler* App::getScheduler() const
 
 void App::resetScheduler() {
     int deliveries_per_day = scheduler->getDeliveriesPerDay();
+    int time = scheduler->getTimeAvailable();
     scheduler = new Scheduler("../data/vans.csv",
                                       "../data/deliveries.csv");
     scheduler->setDeliveriesPerDay(deliveries_per_day);
+    scheduler->setTimeAvailable(time);
 }
 
 void App::setState(State* state)

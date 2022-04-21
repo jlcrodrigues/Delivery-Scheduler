@@ -43,6 +43,18 @@ public:
    int getDeliveriesPerDay() const;
 
    /**
+    * Get the time available for the express deliveries.
+    * @return Time available for scenario 3 in seconds.
+    */
+   int getTimeAvailable() const;
+
+   /**
+    * Set the time available for the express deliveries.
+    * @param time_available  Time available for scenario 3 in seconds.
+    */
+   void setTimeAvailable(const int& time_available);
+
+   /**
     * Change the amount of deliveries considered in a day.
     * @param amount The amount of deliveries to be allocated in a day.
     */

@@ -122,6 +122,7 @@ Allocation Scheduler::scenario2() {
 
     setNextDeliveries();
     std::sort(daily_deliveries.begin(), daily_deliveries.end(), compareDeliveriesCost);
+    std::vector<Delivery> daily_deliveries_copy(daily_deliveries.begin(), daily_deliveries.end());
 
     std::list<Courier> available_couriers(couriers_copy.begin(), couriers_copy.end());
 
@@ -129,12 +130,24 @@ Allocation Scheduler::scenario2() {
 
     initValues();
 
+/*
     for (Delivery &delivery: daily_deliveries) {
         if (!getFirstFitUsed(delivery)) {
             if (!getFirstFitNew(available_couriers, delivery)) {
                 non_delivered.push_back(delivery);
             }
         }
+    }
+*/
+    int size_d;
+    auto it_c = couriers_copy.begin();
+    while (true) {
+        size_d = daily_deliveries_copy.size();
+        knapSack(daily_deliveries_copy, *it_c);
+        if (daily_deliveries_copy.size() == size_d)
+            break;
+        allocation.addCourier(*it_c);
+        it_c++;
     }
 
     allocation.clearLosingCouriers();
@@ -210,6 +223,44 @@ bool Scheduler::getFirstFitNew(std::list<Courier> &available_couriers, Delivery&
     }
     return false;
 }
+
+
+int Scheduler::knapSack(std::vector<Delivery>& deliveries_copy, Courier& courier) {
+    int n = deliveries_copy.size();
+    int W = courier.getCapacity();
+
+    std::vector<std::vector<int>> table(n + 1, std::vector<int>(W + 1));
+
+    for (int i = 0; i <= n; i++) {
+        for (int w = 0; w <= W; w++) {
+            if (i == 0 || w == 0) {
+                table[i][w] = 0;
+            }
+            else if (deliveries_copy[i - 1].getCapacity() <= W)
+                table[i][w] = std::max(table[i - 1][w], table[i - 1][w - deliveries_copy[i - 1].getCapacity()] + deliveries_copy[i - 1].getCompensation());
+            else table[i][w] = table[i - 1][w];
+            }
+        }
+    int res = table[n][W];
+
+    // getting used deliveries
+    int w = W;
+    for (int i = n; i > 0 && res > 0; i--) {
+        if (res == table[i - 1][w]) {
+            continue;
+        }
+        else {
+            courier.addDelivery(deliveries_copy[i - 1]);
+            allocation.addDelivery(deliveries_copy[i - 1]);
+            res -= deliveries_copy[i - 1].getCompensation();
+            w -= deliveries_copy[i - 1].getCapacity();
+
+            deliveries_copy.erase(deliveries_copy.begin() + i - 1);
+        }
+    }
+}
+
+
 
 bool Scheduler::insertExpressDelivery(Delivery& delivery){
     std::vector<Courier>& used_couriers = allocation.getUsedCouriers();

@@ -142,6 +142,7 @@ private:
    int deliveries_per_day;
    int time_available;
 
+    int knapSack(std::vector<Delivery> &deliveries_copy, Courier &courier);
 };
 
 

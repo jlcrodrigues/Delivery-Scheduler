@@ -30,6 +30,10 @@ void Scheduler::loadDeliveries(const std::string &file_path) {
     }
 }
 
+int Scheduler::getDeliveriesPerDay() const {
+    return deliveries_per_day;
+}
+
 void Scheduler::setDeliveriesPerDay(const int &amount) {
     deliveries_per_day = amount;
 }
@@ -77,6 +81,7 @@ bool compareDuration(const Delivery& d1, const Delivery& d2){
 }
 
 Allocation Scheduler::scenario1() {
+    allocation = Allocation();
     std::vector<Courier> couriers_copy(couriers.begin(), couriers.end());
     std::sort(couriers_copy.begin(), couriers_copy.end(), compareCouriersSize);
 
@@ -103,6 +108,7 @@ Allocation Scheduler::scenario1() {
 }
 
 Allocation Scheduler::scenario2() {
+    allocation = Allocation();
     std::vector<Courier> couriers_copy(couriers.begin(), couriers.end());
     std::sort(couriers_copy.begin(), couriers_copy.end(), compareCouriersCost);
 

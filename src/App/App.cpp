@@ -21,9 +21,10 @@ Scheduler* App::getScheduler() const
 }
 
 void App::resetScheduler() {
+    int deliveries_per_day = scheduler->getDeliveriesPerDay();
     scheduler = new Scheduler("../data/vans.csv",
                                       "../data/deliveries.csv");
-    scheduler->setDeliveriesPerDay(100);
+    scheduler->setDeliveriesPerDay(deliveries_per_day);
 }
 
 void App::setState(State* state)

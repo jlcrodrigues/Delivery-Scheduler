@@ -37,6 +37,12 @@ public:
    void loadDeliveries(const std::string& file_path);
 
    /**
+    * Get the amount of deliveries being attempted to allocate per day.
+    * @return Integer with the amount of deliveries tried to allocate daily.
+    */
+   int getDeliveriesPerDay() const;
+
+   /**
     * Change the amount of deliveries considered in a day.
     * @param amount The amount of deliveries to be allocated in a day.
     */

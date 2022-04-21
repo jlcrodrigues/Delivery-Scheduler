@@ -5,6 +5,7 @@ void InitialState::step(App* app) {
 
    std::cout << "\tMenu\n\n";
    std::cout << "2) Start\n";
+   std::cout << "1) Settings\n";
    std::cout << "0) Exit\n";
 
    while (true)
@@ -14,6 +15,9 @@ void InitialState::step(App* app) {
        switch (option) {
            case 2:
                app->setState(new ChooseSceneryState());
+               return;
+           case 1:
+               app->setState(new SettingsState());
                return;
            case 0:
                app->setState(nullptr);

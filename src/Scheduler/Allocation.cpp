@@ -1,12 +1,23 @@
 #include "Allocation.h"
 
+Allocation::Allocation() {
+    used_weight = 0;
+    total_weight = 0;
+    used_volume = 0;
+    total_volume = 0;
+    reward = 0;
+    cost = 0;
+    couriers = {};
+    non_delivered = {};
+}
+
 std::ostream& operator<<(std::ostream& os, const Allocation& allocation) {
     os << "Allocated " << allocation.getDeliveriesCount();
     os << " (" << allocation.getDeliveriesRatio() << "%)" << " packages through ";
     os << allocation.couriers.size() << " vans.\n";
-    os << "Used volume: " << (double)(allocation.used_volume  * 100 / allocation.total_volume) << "% ("
+    os << "Used volume: " << allocation.getVolumeRatio() << "% ("
         << allocation.used_volume << "/" << allocation.total_volume << ").\n";
-    os << "Used weight: " << (allocation.used_weight * 100/ allocation.total_weight) << "% ("
+    os << "Used weight: " << allocation.getWeightRatio() << "% ("
         << allocation.used_weight << "/" << allocation.total_weight << ").\n";
     os << "Total profit: " << allocation.reward - allocation.cost << ".\n\n";
     return os;
@@ -106,5 +117,16 @@ int Allocation::getDeliveriesCount() const {
 
 int Allocation::getDeliveriesRatio() const {
     int delivered = getDeliveriesCount();
+    if (delivered + non_delivered.size() == 0) return 0;
     return delivered * 100 / (delivered + non_delivered.size());
+}
+
+int Allocation::getVolumeRatio() const {
+    if (total_volume == 0) return 0;
+    return used_volume  * 100 / total_volume;
+}
+
+int Allocation::getWeightRatio() const {
+    if (total_weight == 0) return 0;
+    return used_weight  * 100 / total_weight;
 }

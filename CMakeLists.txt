@@ -20,6 +20,8 @@ set(SOURCE_FILES
         src/App/Scenery2State.h
         src/App/Scenery3State.cpp
         src/App/Scenery3State.h
+        src/App/SettingsState.cpp
+        src/App/SettingsState.h
         src/App/State.cpp
         src/App/State.h
 

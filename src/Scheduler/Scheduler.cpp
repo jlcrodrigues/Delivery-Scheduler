@@ -170,6 +170,42 @@ Allocation Scheduler::scenario3() {
     return allocation;
 }
 
+Allocation Scheduler::scenario1BruteForce(){
+    std::vector<Delivery> deliveries_copy(deliveries.begin(), deliveries.end());
+    std::sort(deliveries_copy.begin(), deliveries_copy.end(), compareDeliveriesSize);
+
+    initValues();
+
+    std::vector<Courier> couriers_copy(couriers.begin(), couriers.end());
+    std::sort(couriers_copy.begin(), couriers_copy.end(), compareCouriersSize);
+    std::list<Courier> available_couriers(couriers_copy.begin(), couriers_copy.end());
+
+}
+
+int Scheduler::recursiveTesting(Allocation &best ,std::vector<Delivery> deliveries ,int deliveryId ,int courierId){
+    int courier_amount = INT_MAX;
+    if (deliveryId == deliveries.size()){
+        best.setVolume(0,0);
+        best.setWeight(0,0);
+        return 0;
+    }
+
+    for (int i=0;i<couriers.size();i++){
+        Allocation courier_i;
+        int courier_i_amount = recursiveTesting(courier_i,deliveries, deliveryId+1, i);
+        if (courier_i_amount < courier_amount){
+            best = courier_i;
+            courier_amount = courier_i_amount;
+        }
+    }
+    std::vector<Courier>& used_couriers = best.getUsedCouriers();
+    if (deliveries[deliveryId].getVolume() <= couriers[courierId].getVolume() &&
+        deliveries[deliveryId].getWeight() <= couriers[courierId].getFreeWeight()){
+
+    }
+
+}
+
 void Scheduler::initValues() {
     std::vector<Delivery>& non_delivered = allocation.getNonDelivered();
 

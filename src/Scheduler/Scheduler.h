@@ -102,6 +102,9 @@ public:
     */
    Allocation scenario3();
 
+   Allocation scenario1BruteForce();
+
+   int recursiveTesting(Allocation &best ,std::vector<Delivery> deliveries ,int deliveryId ,int courierId);
 private:
    /** Resets all the values needed for the scenario's algorithms.**/
    void initValues();

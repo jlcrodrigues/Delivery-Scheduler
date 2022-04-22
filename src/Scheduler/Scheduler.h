@@ -67,6 +67,11 @@ public:
    int getDay() const;
 
    /**
+    * Go back one day.
+    */
+   void prevDay();
+
+   /**
     * Get the courier's vector.
     * @return A Vector of courier's objects.
     */

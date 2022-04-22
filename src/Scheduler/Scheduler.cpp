@@ -42,6 +42,10 @@ int Scheduler::getDay() const {
     return current_day;
 }
 
+void Scheduler::prevDay() {
+    current_day--;
+}
+
 int Scheduler::getTimeAvailable() const {
     return time_available;
 }

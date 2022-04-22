@@ -25,6 +25,7 @@ void Scenery2State::step(App* app) {
         switch (option) {
             case 3:
                 displayCouriers(app, allocation);
+                app->getScheduler()->prevDay();
                 return;
             case 2:
                 app->setState(new Scenery2State());
